@@ -1,23 +1,31 @@
 import React,{ Component } from 'react';
 import classes from './App.module.css';
-import ProductPreview from './ProductPreview';
-import ProductDetails from './ProductDetails';
-import Topbar from './Topbar';
-import ProductData from './ProductData';
+import ProductPreview from './ProductPreview/ProductPreview';
+import ProductDetails from './ProductDetails/ProductDetails';
+import Topbar from './Topbar/Topbar';
+import ProductData from './utils/ProductData';
 
 class App extends Component {
   state ={
-    productData : ProductData
+    productData : ProductData,
+    currentPreviewImagePos : 0,
+    currentSelectedFeature: 0,
   }
 
+  onColorOptionClick = (pos) => {
+     this.setState({currentPreviewImagePos: pos});
+  }
 
+  onFeatureItemClick = (pos) => {    
+    this.setState({currentSelectedFeature: pos})
+  }
   render(){
     return (
       <div className="App">      
           <Topbar/>
         <div className={classes.MainContainer}>
-          <ProductPreview/>
-          <ProductDetails data={this.state.productData}/>
+          <ProductPreview currentPreviewImage={this.state.productData.colorOptions[this.state.currentPreviewImagePos].imageUrl} currentSelectedFeature={this.state.currentSelectedFeature}/>
+          <ProductDetails data={this.state.productData} onColorOptionClick={this.onColorOptionClick} currentPreviewImagePos={this.state.currentPreviewImagePos} onFeatureItemClick={this.onFeatureItemClick} currentSelectedFeature={this.state.currentSelectedFeature}/>
         </div>
       </div>
     );
