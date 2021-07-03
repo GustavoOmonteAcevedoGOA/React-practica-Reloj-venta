@@ -18,6 +18,17 @@ class App extends Component {
 
   onFeatureItemClick = (pos) => {    
     this.setState({currentSelectedFeature: pos})
+
+  }
+  shouldComponentUpdate(nextProps, nextState){
+    if( (nextState.currentPreviewImagePos === this.state.currentPreviewImagePos) && (nextState.currentSelectedFeature === this.state.currentSelectedFeature)){
+      console.log(`no cambio`);
+      
+      
+      return false;
+    }
+    console.log(`cambio`);
+    return true;
   }
   render(){
     return (
@@ -25,7 +36,7 @@ class App extends Component {
           <Topbar/>
         <div className={classes.MainContainer}>
           <ProductPreview currentPreviewImage={this.state.productData.colorOptions[this.state.currentPreviewImagePos].imageUrl} currentSelectedFeature={this.state.currentSelectedFeature}/>
-          <ProductDetails data={this.state.productData} onColorOptionClick={this.onColorOptionClick} currentPreviewImagePos={this.state.currentPreviewImagePos} onFeatureItemClick={this.onFeatureItemClick} currentSelectedFeature={this.state.currentSelectedFeature}/>
+          <ProductDetails data={this.state.productData} onColorOptionClick={this.onColorOptionClick} currentPreviewImagePos={this.state.currentPreviewImagePos} onFeatureItemClick={this.onFeatureItemClick} currentSelectedFeature = {this.state.currentSelectedFeature}/>
         </div>
       </div>
     );
